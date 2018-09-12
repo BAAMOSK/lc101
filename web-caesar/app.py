@@ -6,12 +6,13 @@ app = Flask(__name__)
 
 @app.route('/', methods=["GET", "POST"])
 def index():
-    data = request.form.get('rot');
-    print(data)
+    #data = request.get('rot');
+    #print(request)
+    print("This is after the request")
     #rot = int(rot)
     #text = chr(text)
     #encrypted = text(rotate_character)
-    return render_template("index.html", data=data)
+    return render_template("index.html")
 
 
 if( __name__ == "__main__"):
