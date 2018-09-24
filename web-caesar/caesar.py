@@ -1,46 +1,40 @@
-from helpers import alphabet_position, rotate_character
+def alphabet_position(character):
+    alphabet = 'abcdefghijklmnopqrstuvwxyz'
+    lower = character.lower()
+    return alphabet.index(lower)
 
-def encrypt(text, rot):
-    text = list(text)
+def rotate_string_13(text):
 
-    hashed = ''.join([rotate_character(letter, rot) for letter in text])
+    rotated = ''
+    alphabet = 'abcdefghijklmnopqrstuvwxyz'
 
-    return hashed
+    for char in text:
+        rotated_idx = (alphabet_position(char) + 13) % 26
+        if char.isupper():
+            rotated = rotated + alphabet[rotated_idx].upper()
+        else:
+            rotated = rotated + alphabet[rotated_idx]
 
-def main():
-    word = input('Type a message:\n')
-    rotate = int(input('Rotate by:\n'))
-    print(encrypt(word, rotate))
-
-'''def alphabet_position(letter):
-    a = list(map(chr, range(97, 123)))
-
-    result = a.index(letter.lower())
-    return result
+    return rotated
 
 def rotate_character(char, rot):
-    if type(char) == int:
-        return char
-    elif not char.isalpha():
-        return char
+    alphabet = 'abcdefghijklmnopqrstuvwxyz'
+    rotated_idx = (alphabet_position(char) + rot) % 26
 
-    a = list(map(chr, range(97, 123)))
+    if char.isupper():
+        return alphabet[rotated_idx].upper()
+    else:
+        return alphabet[rotated_idx]
 
-    index = alphabet_position(char)
+def rotate_string(text, rot):
 
-    rot_char = int(index) + rot
+    rotated = ''
 
-    if char == char.upper() and rot_char < 26:
-        return a[rot_char].upper()
-    elif rot_char > 25:
-        rot_char = rot_char % 26
+    for char in text:
+        if (char.isalpha()):
+            rotated = rotated + rotate_character(char, rot)
+        else:
+            rotated = rotated + char
 
-        if char == char.upper():
-            return a[rot_char].upper()
+    return rotated
 
-        return a[rot_char]
-
-    return a[rot_char]'''
-
-if __name__ == '__main__':
-    main()
