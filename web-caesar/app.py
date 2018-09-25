@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, url_for
 from flask_wtf import FlaskForm
 from caesar import rotate_string
 
@@ -9,34 +9,34 @@ main = '''
     <html>
         <head>
             <style>
-                form {
+                form {{
                     background-color: #eee;
                     padding: 20px;
                     margin: 0 auto;
                     width: 540px;
                     font: 16px sans-serif;
                     border-radius: 10px;
-                }
-                textarea {
+                }}
+                textarea {{
                     margin: 10px 0;
                     width: 540px;
                     height: 120px;
-                }
+                }}
             </style>
         </head>
         <body>
           <!-- create your form here -->
-          <form>
-            <label for="rot" placeholder="0">Rotate by: </label>
-            <input name="rot"></input>
-            <textarea name="text">{0}</textarea>
-            <button>SUBMIT</button>
+          <form action="/encrypt" method="POST">
+            <label for="rot">Rotate by: </label>
+            <input id="rot" name="rot"></input>
+            <textarea id="text" name="text">{value}</textarea>
+            <button type="submit">SUBMIT</button>
           </form>
         </body>
     </html>
 '''
 
-@app.route('/')
+@app.route('/', methods=["POST", "GET"])
 def index():
     #data = request.get('rot');
     #print(request)
@@ -45,12 +45,13 @@ def index():
     #text = chr(text)
     #encrypted = text(rotate_character)
     #return render_template("index.html")
-    return main
+    return main.format(rot=8,value="Cat")
 
-@app.route('/', methods=["POST"])
+@app.route('/encrypt')
 def encrypt(rot, text):
-    return "<h1>" + rot + "</h1>" + "<h1>" + text + "</h1>"
-
+    #value = request.get('rot')
+    print(rot, text)
+    return main.format(value=value) 
 
 if( __name__ == "__main__"):
     app.run()
